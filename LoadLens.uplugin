@@ -1,0 +1,27 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0.0",
+	"EngineVersion": "5.8.0",
+	"FriendlyName": "LoadLens - Catch The Blocking Loads That Freeze Your Frame",
+	"Description": "LoadLens does not preload anything and does not fix anything. It tells you what blocked and what it cost. Every synchronous asset load is caught the moment it happens, on the engine's own hook - FCoreDelegates::OnSyncLoadPackage - so nothing has to be instrumented and nothing has to be recompiled. Around that hook LoadLens measures the stall, and adds the frame number, the world time, whether it happened after the warm-up window, and - where it can be determined honestly - the Blueprint function that asked for it. Where the caller cannot be determined it says 'unknown caller' and never a guessed name, because a wrong culprit costs more time than no culprit. It counts instead of spamming: the same path loaded a hundred times is one line with a counter and a sum, not a hundred log lines that make the hitch worse than it already was. The budget is zero blocking loads after start-up, measured from a warm-up window of three seconds because a map load always brings some. The counter box turns red the moment one gets through and names the most expensive one with its path and its milliseconds - drawn on UCanvas from an AHUD, so it is still there in a packaged Shipping build where the profiler is not. And LoadLens.Gate <seconds> measures, writes Saved/LoadLens/report.json and ends the process with 0 for none, 1 under the warning limit and 2 above it - the same three exit codes as LocaleGuard, AssetWarden and WidgetLedger, so a build server that already checks one of them needs no second convention. LoadLens.Provoke deliberately triggers a blocking load on a demo asset, so you can watch the box react without having to build a bug into your own game first. This is single-asset blocking loading - a LoadSynchronous, a LoadObject, a soft pointer resolved in the wrong moment. Level streaming is a different hitch with a different cause; that one is StreamGuard.",
+	"Category": "Engine Tools",
+	"CreatedBy": "Silvan Teufel",
+	"CreatedByURL": "https://silvan.teufel-engineering.com",
+	"DocsURL": "https://wiki.teufel-engineering.com/en/LoadLens/documentation",
+	"SupportURL": "mailto:teufelsilvan@gmail.com",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "LoadLens",
+			"Type": "Runtime",
+			"LoadingPhase": "PreEarlyLoadingScreen",
+			"PlatformAllowList": [
+				"Win64"
+			]
+		}
+	]
+}
