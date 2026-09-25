@@ -591,6 +591,6 @@ void FLoadLensRecorder::FinishGate()
 
 	if (bGateExitWhenDone)
 	{
-		FPlatformMisc::RequestExitWithStatus(false, static_cast<uint8>(ExitCode));
+		FPlatformMisc::RequestExitWithStatus(/*Force=*/true, static_cast<uint8>(ExitCode));
 	}
 }
